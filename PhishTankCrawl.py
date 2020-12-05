@@ -28,9 +28,7 @@ def update_db(file_path):
     for index, row in df.iterrows():
         if len(cursor.execute("SELECT * FROM phishtank WHERE phish_id=" + str(row['phish_id'])).fetchall()) == 0:
             print(row['phish_id'])
-            sql = ''' INSERT INTO phishtank (phish_id,url,phish_detail_url,submission_time,verified,verification_time,online,target)
-                          VALUES(?,?,?,?,?,?,?,?) ''' % (row['phish_id'], row['url'], row['phish_detail_url'], row['submission_time'], row['verified'], row['verification_time'], row['online'], row['target'])
-            cursor.execute(sql)
+            cursor.execute(""" INSERT INTO phishtank (phish_id,url,phish_detail_url,submission_time,verified,verification_time,online,target) VALUES(?,?,?,?,?,?,?,?) """, (str(row['phish_id']), str(row['url']), str(row['phish_detail_url']), str(row['submission_time']), str(row['verified']), str(row['verification_time']), str(row['online']), str(row['target'])))
             db.commit()
         else:
             print("Existed")
@@ -39,9 +37,9 @@ def update_db(file_path):
 if __name__ == '__main__':
 
     # run()
-    # download_phishtank()
-    schedule.every().hour.do(download_phishtank)
-
-    while True:
-        schedule.run_pending()
-        time.sleep(60)
+    download_phishtank()
+    # schedule.every().hour.do(download_phishtank)
+    #
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(60)
