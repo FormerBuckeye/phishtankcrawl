@@ -37,9 +37,9 @@ def update_db(file_path):
 if __name__ == '__main__':
 
     # run()
-    download_phishtank()
-    # schedule.every().hour.do(download_phishtank)
-    #
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(60)
+    # download_phishtank()
+    schedule.every().hour.do(download_phishtank)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
